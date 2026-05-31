@@ -1,0 +1,71 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ColorInator.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:colorpicker="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls.ColorPicker"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ColorInator.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        MinWidth="730"
+        Title="ColorInator">
+        
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="330,*,200" Margin="16">
+        
+        <!-- Left: Color Builder -->
+        <StackPanel Grid.Column="0" Spacing="12">            
+            <colorpicker:ColorView Color="{Binding SelectedColor, Mode=TwoWay}" IsAlphaVisible="False" IsAccentColorsVisible="False"/>
+            <Button Content="Save Color" Command="{Binding SaveColorCommand}" HorizontalAlignment="Stretch"/>
+        </StackPanel>
+
+        <!-- Center: Saved Colors List -->
+        <ListBox Grid.Column="1" Margin="16,0,0,0"
+                ItemsSource="{Binding SavedColors}"
+                SelectedItem="{Binding SelectedSavedColor, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Border Width="30" Height="30" CornerRadius="4"
+                                Background="{Binding HexColor}"/>
+                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- Detail Panel -->
+        <StackPanel Grid.Column="2" Margin="16,0,0,0" Spacing="12"
+                    IsVisible="{Binding SelectedSavedColor, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <Border Height="60" CornerRadius="6" Background="{Binding SelectedSavedColor.HexColor}"/>
+            <TextBlock Text="{Binding SelectedSavedColor.Name}"/>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="{Binding SelectedSavedColor.HexColor}" VerticalAlignment="Center"/>
+                <Button Grid.Column="1" Content="Copy" Command="{Binding CopyHexCommand}"/>
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="{Binding SelectedSavedColor.RgbDisplay}" VerticalAlignment="Center"/>
+                <Button Grid.Column="1" Content="Copy" Command="{Binding CopyRgbCommand}"/>
+            </Grid>
+            <TextBlock Text="Complementary"/>
+            <Button Command="{Binding LoadComplementaryColorCommand}" Padding="0" HorizontalAlignment="Stretch">
+                <Border Height="60" CornerRadius="6" Background="{Binding SelectedSavedColor.ComplementaryHex}" HorizontalAlignment="Stretch"/>
+            </Button>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="{Binding SelectedSavedColor.ComplementaryHex}" VerticalAlignment="Center"/>
+                <Button Grid.Column="1" Content="Copy" Command="{Binding CopyComplementaryHexCommand}"/>
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="{Binding SelectedSavedColor.ComplementaryRgbDisplay}" VerticalAlignment="Center"/>
+                <Button Grid.Column="1" Content="Copy" Command="{Binding CopyComplementaryRgbCommand}"/>
+            </Grid>
+            <Button Content="Delete" Command="{Binding DeleteColorCommand}" HorizontalAlignment="Stretch"/>
+        </StackPanel>
+
+    </Grid>
+
+</Window>
