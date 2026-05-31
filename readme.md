@@ -52,6 +52,9 @@ Saved colors are stored at:
 ~/.config/ColorInator/colors.json
 ```
 
+<img width="810" height="506" alt="image" src="https://github.com/user-attachments/assets/44790849-db0b-4130-8bb3-4c84b90ec8b4" />
+
+
 ## Credits
 
 Color naming powered by [The Color API](https://www.thecolorapi.com) — free, no key required.
