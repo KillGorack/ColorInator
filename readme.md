@@ -45,6 +45,13 @@ Binary will be at `bin/Release/net8.0/linux-x64/publish/ColorInator`.
 
 Keep the `.so` files in the same folder as the binary.
 
+## Downloads
+
+Pre-built binaries available at [KillGorack.com](https://www.killgorack.com/PX4/index.php?ap=software&id=8&cn=det)
+
+- Windows x64
+- Linux x64
+
 ## Data Storage
 
 Saved colors are stored at:
